@@ -634,3 +634,5 @@ replay_pid*
 a.out
 metastore-postgresql\
 hdfs\
+metastore-postgresql/
+hdfs/
