@@ -32,6 +32,12 @@ def get_all_urls_from_keys_file(keys_file):
     try:
         urls = []
 
+        
+        if(os.getcwd().split("\\")[-1] == "Duffy4Commish"):
+            keys_file = "DownloadRiotData\\" + keys_file
+        if(os.getcwd().split("/")[-1] == "Duffy4Commish"):
+            keys_file = "DownloadRiotData/" + keys_file
+
         with open(keys_file, "r") as file:
             for line in file:
                 url = line.strip()
@@ -44,11 +50,17 @@ def get_all_urls_from_keys_file(keys_file):
 
 if __name__ == "__main__":
     keys_file = "keys.txt"  # Replace with the path to your keys.txt file
-    download_folder = "downloads"  # Name of the folder to save downloaded files
+    download_folder = "esports-data"  # Name of the folder to save downloaded files
 
+    # if in the DownloadRiotData folder, attempt to put files in one directory up
+    if(os.getcwd().split("\\")[-1] == "DownloadRiotData"):
+        download_folder = "..\\"+download_folder
+    if(os.getcwd().split("/")[-1] == "DownloadRiotData"):
+        download_folder = "../"+download_folder
+
+    print(download_folder)
     # Create the "downloads" folder if it doesn't exist
     os.makedirs(download_folder, exist_ok=True)
-
     urls_to_download = get_all_urls_from_keys_file(keys_file)
 
     with concurrent.futures.ThreadPoolExecutor() as executor:
