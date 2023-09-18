@@ -63,7 +63,7 @@ How to get started (still in development, may change)
 4: load data
     - cd /esportsSql
     - hadoop fs -put leagues.json hdfs://namenode:8020/esports-sql/leagues.json
-    - hadoop fs -put leagues.json hdfs://namenode:8020/esports-sql/players.json
-    - hadoop fs -put leagues.json hdfs://namenode:8020/esports-sql/teams.json
-    - hadoop fs -put leagues.json hdfs://namenode:8020/esports-sql/tournaments.json
+    - hadoop fs -put players.json hdfs://namenode:8020/esports-sql/players.json
+    - hadoop fs -put teams.json hdfs://namenode:8020/esports-sql/teams.json
+    - hadoop fs -put tournaments.json hdfs://namenode:8020/esports-sql/tournaments.json
     - ############# games
