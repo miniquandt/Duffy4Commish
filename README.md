@@ -18,7 +18,10 @@ How to get started (still in development, may change)
         ii: select the python file
         iii: select [run] in the taskbar at the nav bar then [start without debugging]
             - [ctrl][f5]
-        iv: if you get a dropdown "select a dubug
+        iv: if you get a dropdown "select a dubug configuration"
+            - select "Python File"
+2: after a few minutes you should have ~60 gb of files in a esports-data folder
+    - that folder should be in the project's root directory, not in the DownloadRiotData folder
 
 # Set up Docker
 
@@ -36,5 +39,31 @@ How to get started (still in development, may change)
     - after running this command, in Docker Desktop you should see duffy4commish as a container
     - if you wish to run docker in the background add a "-d" on the end to run it detached
     docker-compose up -d
+    - to shut down the docker container, 
+        - in terminal press [ctrl][c]
+        - in docker container press the stop button for duffy4commish, and it will shut down all the containers
 
-4:
+# load data 
+1: connect to hive-server
+    A: docker exec -it hive-server /bin/bash
+    B: -open Docker, containers
+        - find the hive-server container
+        - click the 3 vertical dots
+        - click [Open in Terminal]
+        - enter command "bash" 
+2: run following command to move json serde with dependancy files to proper install location
+    - cp /hive-lib/json-serde-1.3.8-jar-with-dependencies.jar /opt/hive/lib/
+3: run following commands to create sql tables
+    - cd /sql
+    - hive -f leagues.hql
+    - hive -f players.hql
+    - hive -f teams.hql
+    - hive -f tournaments.hql
+    - ######## games.hql
+4: load data
+    - cd /esportsSql
+    - hadoop fs -put leagues.json hdfs://namenode:8020/esports-sql/leagues.json
+    - hadoop fs -put leagues.json hdfs://namenode:8020/esports-sql/players.json
+    - hadoop fs -put leagues.json hdfs://namenode:8020/esports-sql/teams.json
+    - hadoop fs -put leagues.json hdfs://namenode:8020/esports-sql/tournaments.json
+    - ############# games

@@ -1,5 +1,5 @@
-create database if not exists lol3;
-use lol3;
+create database if not exists lol;
+use lol;
 CREATE EXTERNAL TABLE `players`(
   `player_id` string, 
   `handle` string, 
@@ -15,8 +15,7 @@ STORED AS INPUTFORMAT
 OUTPUTFORMAT 
   'org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat'
 LOCATION
-  'hdfs://namenode:8020/esports-data/players.json'
+  'hdfs://namenode:8020/esports-sql/players.json'
 TBLPROPERTIES (
   'classification'='json',
-  'compressionType'='bzip2', 
   'typeOfData'='file')

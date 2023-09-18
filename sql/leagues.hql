@@ -20,7 +20,8 @@ STORED AS INPUTFORMAT
   'org.apache.hadoop.mapred.TextInputFormat' 
 OUTPUTFORMAT 
   'org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat'
+LOCATION
+  'hdfs://namenode:8020/esports-sql/leagues.json'
 TBLPROPERTIES (
   'classification'='json',
-  'compressionType'='bzip2', 
   'typeOfData'='file')

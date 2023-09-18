@@ -50,5 +50,4 @@ LOCATION
   'https://power-rankings-dataset-gprhack.s3.us-west-2.amazonaws.com/athena-ready/games'
 TBLPROPERTIES (
   'classification'='json',
-  'compressionType'='bzip2',
   'typeOfData'='file')
