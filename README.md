@@ -44,6 +44,7 @@ How to get started (still in development, may change)
         - in docker container press the stop button for duffy4commish, and it will shut down all the containers
 
 # load data 
+
 1: connect to hive-server
     A: docker exec -it hive-server /bin/bash
     B: -open Docker, containers
@@ -51,8 +52,10 @@ How to get started (still in development, may change)
         - click the 3 vertical dots
         - click [Open in Terminal]
         - enter command "bash" 
+
 2: run following command to move json serde with dependancy files to proper install location
     - cp /hive-lib/json-serde-1.3.8-jar-with-dependencies.jar /opt/hive/lib/
+
 3: run following commands to create sql tables
     - cd /sql
     - hive -f leagues.hql
@@ -60,6 +63,7 @@ How to get started (still in development, may change)
     - hive -f teams.hql
     - hive -f tournaments.hql
     - ######## games.hql
+    
 4: load data
     - cd /esportsSql
     - hadoop fs -put leagues.json hdfs://namenode:8020/esports-sql/leagues.json
