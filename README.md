@@ -62,12 +62,25 @@ How to get started (still in development, may change)
     - hive -f players.hql
     - hive -f teams.hql
     - hive -f tournaments.hql
-    - ######## games.hql
+    - hive -f games.hql
     
-4: load data
+4: load data (warning the last command may take 20 minutes)
     - cd /esportsSql
     - hadoop fs -put leagues.json hdfs://namenode:8020/esports-sql/leagues.json
     - hadoop fs -put players.json hdfs://namenode:8020/esports-sql/players.json
     - hadoop fs -put teams.json hdfs://namenode:8020/esports-sql/teams.json
     - hadoop fs -put tournaments.json hdfs://namenode:8020/esports-sql/tournaments.json
-    - ############# games
+    - hadoop fs -mkdir /esports-data
+    - hadoop fs -put /esportsData/* hdfs://namenode:8020/esports-data/
+
+# Connect to Database
+
+1: type: hive
+
+2: commands:
+    show databases;
+    use [database];
+        - use lol;
+    show tables;
+
+3: get query from "Queries.sql" file

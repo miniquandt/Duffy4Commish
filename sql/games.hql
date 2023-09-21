@@ -47,7 +47,7 @@ STORED AS INPUTFORMAT
 OUTPUTFORMAT
   'org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat'
 LOCATION
-  'https://power-rankings-dataset-gprhack.s3.us-west-2.amazonaws.com/athena-ready/games'
+  'hdfs://namenode:8020/esports-data/'
 TBLPROPERTIES (
   'classification'='json',
   'typeOfData'='file')
