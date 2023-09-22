@@ -75,6 +75,8 @@ How to get started (still in development, may change)
 
 # Connect to Database
 
+0: attempt at visualizing data mapping https://dbdiagram.io/d/650d1dc4ffbf5169f0481c88
+
 1: type: hive
 
 2: commands:
