@@ -62,14 +62,16 @@ How to get started (still in development, may change)
     - hive -f players.hql
     - hive -f teams.hql
     - hive -f tournaments.hql
+    - hive -f mapping-data.hql
     - hive -f games.hql
     
-4: load data (warning the last command may take 20 minutes)
+4: load data (warning 1: if file fails to find a folder or directory ping me; 2 the last command may take 20 minutes)
     - cd /esportsSql
     - hadoop fs -put leagues.json hdfs://namenode:8020/esports-sql/leagues.json
     - hadoop fs -put players.json hdfs://namenode:8020/esports-sql/players.json
     - hadoop fs -put teams.json hdfs://namenode:8020/esports-sql/teams.json
     - hadoop fs -put tournaments.json hdfs://namenode:8020/esports-sql/tournaments.json
+    - hadoop fs -put mapping-data.json hdfs://namenode:8020/esports-sql/mapping-data.json
     - hadoop fs -mkdir /esports-data
     - hadoop fs -put /esportsData/* hdfs://namenode:8020/esports-data/
 
