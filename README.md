@@ -86,5 +86,7 @@ How to get started (still in development, may change)
     use [database];
         - use lol;
     show tables;
+    desc [table];
+        - desc games;
 
 3: get query from "Queries.sql" file
