@@ -43,10 +43,17 @@ SELECT t.id, et.matches FROM tournaments t LATERAL VIEW explode(stages.sections)
 LATERAL VIEW explode(et.matches) exptab2 AS et2 WHERE t.slug = 'lcs_summer_2022';
 
 /*//////////////////////////////////////////////////////////////////////////// */
-/* Creates new table with way less info for tournaments */
+/* Creates new table with way less info for tournaments 
 create table tournSmall AS
 SELECT t.id AS Tournament_Id, t.slug AS Tournament_Slug, et.name AS Match_Name, et2.id AS Matches_Ids, et3.id AS Game_Ids
 FROM tournaments t 
+LATERAL VIEW explode(stages.sections) exploaded_table AS et
+LATERAL VIEW explode(et.matches) exptab2 AS et2
+LATERAL VIEW explode(et2.games) exptab3 AS et3
+*/
+create table game_and_team AS
+SELECT t.id AS Tournament_Id, t.slug AS Tournament_Slug, et.name[0] AS name, et3.id AS Game_Ids, et3.teams[0].id[0] AS blue, et3.teams[0].id[1] AS red
+FROM tournaments t
 LATERAL VIEW explode(stages.sections) exploaded_table AS et
 LATERAL VIEW explode(et.matches) exptab2 AS et2
 LATERAL VIEW explode(et2.games) exptab3 AS et3
@@ -64,7 +71,7 @@ ON md.esportsgameid = gIds.GameID;
 
 /* create better mapping data table */
 create table better_mapping_data AS
-SELECT gids.tid AS Tournament_Id, gids.tslug AS slug, gids.gameid AS gameid, md.platformgameid AS platformgameid FROM (
+SELECT gids.tid AS Tournament_Id, gids.tslug AS slug, gids.gameid AS gameid, md.platformgameid AS platformgameid, gids.blueside, gids.redside FROM (
 	SELECT t.tournament_id as tid, t.tournament_slug as tslug, et AS GameID FROM tournsmall t 
 	LATERAL VIEW explode(t.game_ids) exploaded_table AS et
 	WHERE t.tournament_slug like "%2023" AND (t.tournament_slug like "lcs_s%" OR t.tournament_slug like "lck_s%" or t.tournament_slug like "lec_s%" or t.tournament_slug like "lpl_%")) AS gIds
@@ -158,3 +165,10 @@ LATERAL VIEW explode(g.participants) participants_table AS pt
 LATERAL VIEW explode(g.teams) teams_table as tt
 WHERE eventtype = "stats_update" AND tt.teamID = pt.teamID
 LIMIT 500;
+
+/* get only data we care about in games table */
+SELECT * from games g 
+WHERE g.gameover = true 
+	OR eventtype = 'game_info'
+	OR (eventtype = 'epic_monster_kill' and (monstertype = 'dragon' or monstertype = 'baron' or monstertype = 'riftHerald')) 
+	OR (eventtype = 'stats_update' and gametime >= 840000 and gametime <841000);
