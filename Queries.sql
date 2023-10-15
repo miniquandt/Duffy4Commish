@@ -72,7 +72,7 @@ ON md.esportsgameid = gIds.GameID;
 /* create better mapping data table */
 create table better_mapping_data AS 
 SELECT gids.tid AS Tournament_Id, gids.tslug AS slug, gids.gameid AS gameid, md.platformgameid AS platformgameid, gids.blueside, gids.redside FROM (
-	SELECT t.tournament_id as tid, t.tournament_slug as tslug, et AS GameID, t.blue AS blueside, t.name t.red AS redside FROM game_and_team t 
+	SELECT t.tournament_id as tid, t.tournament_slug as tslug, et AS GameID, t.blue AS blueside, t.red AS redside FROM game_and_team t 
 	LATERAL VIEW explode(t.game_ids) exploaded_table AS et
 	WHERE t.tournament_slug like "%2023" AND t.tournament_slug like "lcs_s%" ) AS gIds
 INNER JOIN mapping_data md 
