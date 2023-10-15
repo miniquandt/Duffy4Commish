@@ -87,52 +87,8 @@ SELECT
 	,pt.teamid
 	,pt.participantid
 	,sequenceindex
-	
-	,assistants
-	,monstertype
-	,killer
-	,inenemyjungle
-	,killerteamid
-	/*
-	,localgold
-	,globalgold
-	,bountygold
-	 */
-	,killtype
-	/*
-	 ,stageid
-	 ,killergold
-	 ,dragontype
-	 ,gamename
-	 ,gameversion
-	 ,statsupdateinterval
-	 */
 	,playbackid
 	,gametime
-	/*
-	,nextdragonspawntime
-	,nextdragonname
-	,gameover
-	 */
-	/*
-	 * teams
-	 */
-	,itemid
-	,participantid
-	/*
-	,goldgain
-	,itemafterundo
-	,itembeforeundo
-	,skillslot
-	 */
-	,participant
-	/*
-	,evolved
-	 */
-	,wardtype
-	,placer
-	
-	
 	/* team stats */
 	,tt.assists AS Team_Assists
 	,tt.baronKills AS Team_Baron_Kills
@@ -143,9 +99,10 @@ SELECT
 	,tt.totalGold AS Team_Total_Gold
 	,tt.towerKills AS Team_Tower_Kills
 	/* player stats*/
-	,pt.position.z, pt.position.x
 	,pt.currentgold
-	,pt.xp,pt.level,pt.totalgold
+	,pt.xp
+	,pt.level
+	,pt.totalgold
 	,pt.stats[0].value AS Minions_Killed
 	,pt.stats[1].value AS Neutral_Minions_Killed
 	,pt.stats[2].value AS Neutral_Minions_Killed_Your_Jungle
@@ -156,15 +113,10 @@ SELECT
 	,pt.stats[31].value AS Ward_Placed
 	,pt.stats[32].value AS Ward_Killed
 	,pt.stats[33].value AS Vision_Score
-	,pt.teamid, pt.participantid
-	, pt.position.z, pt.position.x
-	,pt.currentgold
-	,pt.xp,pt.level,pt.totalgold
-FROM games g
+FROM games_small g
 LATERAL VIEW explode(g.participants) participants_table AS pt
 LATERAL VIEW explode(g.teams) teams_table as tt
-WHERE eventtype = "stats_update" AND tt.teamID = pt.teamID
-LIMIT 500;
+WHERE eventtype = "stats_update" AND tt.teamID = pt.teamID;
 
 /* get only data we care about in games table */
 SELECT * from games g 
