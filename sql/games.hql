@@ -37,11 +37,12 @@ CREATE EXTERNAL TABLE if not exists lol.`games`(
   `evolved` boolean,
   `wardtype` string,
   `position` struct<z:bigint,x:bigint>,
+  `winningTeam` bigint,
   `placer` bigint)
 ROW FORMAT SERDE
   'org.openx.data.jsonserde.JsonSerDe'
 WITH SERDEPROPERTIES (
-  'paths'='eventTime,eventType,evolved,gameName,gameOver,gameTime,gameVersion,goldGain,itemAfterUndo,itemBeforeUndo,itemID,nextDragonName,nextDragonSpawnTime,participant,participantID,participants,placer,platformGameId,playbackID,position,sequenceIndex,skillSlot,statsUpdateInterval,teams,wardType,assistants,monsterType,killer,inEnemyJungle,killerTeamID,localgold,globalgold,bountygold,killtype,stageid,killergold,dragontype')
+  'paths'='eventTime,eventType,evolved,gameName,gameOver,gameTime,gameVersion,goldGain,itemAfterUndo,itemBeforeUndo,itemID,nextDragonName,nextDragonSpawnTime,participant,participantID,participants,placer,platformGameId,playbackID,position,sequenceIndex,skillSlot,statsUpdateInterval,teams,wardType,assistants,monsterType,killer,inEnemyJungle,killerTeamID,localgold,globalgold,bountygold,killtype,stageid,killergold,dragontype,winningTeam')
 STORED AS INPUTFORMAT
   'org.apache.hadoop.mapred.TextInputFormat'
 OUTPUTFORMAT
