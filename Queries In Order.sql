@@ -130,8 +130,9 @@ ON gsu.platformgameid = riftelder.platformgameid AND gsu.teamid = riftelder.kill
 WHERE gf.eventtype ='game_end';
 
 /* query 6  create median info from data*/
+create table stats AS
 SELECT 
-	mgeg.median_gold_end_game, mg14.median_gold_14_mins, b.median_baron_per_game, d.median_dragons, m.playoff_multiplier, m.international_multiplier, m.win_multiplier, m.loss_multiplier
+	mgeg.median_gold_end_game, mg14.median_gold_14_mins, med.median_gold_diff_winner_end_game, med.median_gold_diff_winner_14, b.median_baron_per_game, d.median_dragons, g.max_gold, m.playoff_multiplier, m.international_multiplier, m.win_multiplier, m.loss_multiplier
 from 
 	(
 		select 1 AS id, percentile(cast(team_total_gold as BIGINT), 0.5) AS median_gold_end_game 
@@ -165,7 +166,30 @@ INNER JOIN
 	(
 		SELECT 1 as id, '1.15' AS playoff_multiplier, '1.3' AS international_multiplier, '1.2' AS win_multiplier, '.8' AS loss_multiplier
 	) m
-on mgeg.id = m.id;
+on mgeg.id = m.id
+INNER JOIN (
+		select 1 AS id, percentile(cast(gold_diff_end as BIGINT), 0.5) AS median_gold_diff_winner_end_game, percentile(cast(gold_diff_14 as BIGINT), 0.5) AS median_gold_diff_winner_14
+		from team_data_final tdf -- 60733.0
+		WHERE winningteam = teamid
+	) med
+ON mgeg.id = med.id
+INNER JOIN (
+SELECT 1 AS id,
+	(t.gold_diff_14 / s.median14) + (t.gold_diff_end / s.median_end) AS max_gold
+from (
+select 1 AS id, gold_diff_end, gold_diff_14
+		from team_data_final
+) t
+INNER JOIN (
+		select 1 AS id, percentile(cast(gold_diff_end as BIGINT), 0.5) AS median_end, percentile(cast(gold_diff_14 as BIGINT), 0.5) AS median14
+		from team_data_final tdf -- 60733.0
+		WHERE winningteam = teamid
+) s
+ON s.id = t.id
+ORDER BY max_gold DESC
+LIMIT 1
+) g
+ON mgeg.id = g.id;
 
 /* query 7 */
 CREATE Table games_teams_compare AS

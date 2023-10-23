@@ -2,14 +2,15 @@ FROM node:latest
 
 WORKDIR /app
 
-COPY package.json ./
+COPY /duffy4commish/package.json /app
 RUN npm i
-COPY ./website .
-RUN npm run build
 
-ENV HOST=0.0.0.0
+COPY /duffy4commish/ /app
+#RUN npm run build
+#RUN npm prune
+
 EXPOSE 3000
-
 EXPOSE 24678
+ENV HOST=0.0.0.0
 
-CMD ["node"]
+CMD ["npm", "run", "dev"]

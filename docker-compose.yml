@@ -66,14 +66,14 @@ services:
     depends_on:
       - datanode
 
-    app:
-      build:
-        context:
-        dockerfile: dockerfile
-      container_name: duffy4commish
-      ports:
-        -3000:3000
-        -24678:24678
-      
-      volumes:
-        -./website:/webapp
+  # app:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   container_name: duffy4commish
+  #   ports:
+  #     - 3000:3000
+  #     - 24678:24678
+
+  #   volumes:
+  #     - ./duffy4commish:/webapp
