@@ -99,10 +99,8 @@
     }
 
     function teamIdIsSelected(bId, rId) {
-        //console.log(bId);
         for (let t in teamIds){
             if (teamIds[t] == bId || teamIds[t] ==rId){
-                console.log("id"+ bId);
                 return true;
             }
         }
@@ -127,12 +125,12 @@
         }
     }
     var playoffCount = 0;
-    //console.log(tournamentGames.tournamentData.tournament);
+    
     for (const t in tournamentGames.tournamentData.tournament) {
         const game = tournamentGames.tournamentData.tournament[t];
-        //console.log(game.blueside, game.redside);
+        
         if (teamIdIsSelected(game.blueside, game.redside)){
-            //tournamentName = game.slug;
+            
             var gameStat =  getGoldStats(game.gold_diff_14, game.gold_diff_end);
             var objectiveStat = getObjStats(game.towers_end, game.baron_end, game.dragon_end, game.rift_end, game.vision_score_diff_end);
 
@@ -152,7 +150,7 @@
             //const winLoss = (game.winningteam == game.teamid) ? gameStats.gameStats.win_bonus : gameStats.gameStats.loss_bonus;
             //const winLossBonus = winLoss;
             const teamScore = gameStat * normalizedObjStat * domesticLeagueBonus * winLossBonus
-            //console.log(game);
+            
             //Blue team data
             if (game.teamid == 100 && teamIdIsSelected(game.blueside, "")){
                 addScoreToTeam(game.blueteam, teamScore, teamWon);
@@ -173,7 +171,6 @@
   })
   .sort((a, b) => b.scorePerGame - a.scorePerGame);
 
-console.log(sortedTeams);
 
 
 </script>

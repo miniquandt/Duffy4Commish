@@ -40,6 +40,7 @@
                     <th>Rift End</th>
                     <th>Vision Score Diff End</th>
                 </tr>
+
                 <template v-for="t in tournamentData.tournament" :key="t.gameid">
                     <tr>
                         <td>{{ t.slug }}</td>
@@ -164,41 +165,40 @@
     }
 
     var playoffCount = 0;
-    //console.log(tournamentGames.tournamentData.tournament);
+    
     for (const t in tournamentGames.tournamentData.tournament) {
         const game = tournamentGames.tournamentData.tournament[t];
-        //if (game.tournament_id == tId){
-            var gameStat =  getGoldStats(game.gold_diff_14, game.gold_diff_end);
-            var objectiveStat = getObjStats(game.towers_end, game.baron_end, game.dragon_end, game.rift_end, game.vision_score_diff_end);
+        
+        var gameStat =  getGoldStats(game.gold_diff_14, game.gold_diff_end);
+        var objectiveStat = getObjStats(game.towers_end, game.baron_end, game.dragon_end, game.rift_end, game.vision_score_diff_end);
 
-            // normalize objective stat
-            const normalizedObjStat = ((objectiveStat - minObjectiveScore)/ (maxObjectiveScore - minObjectiveScore)) + 1
-            
-            var teamWon = false;
-            if (game.winningteam == game.teamid)
-            {
-                teamWon = true;
-            }
+        // normalize objective stat
+        const normalizedObjStat = ((objectiveStat - minObjectiveScore)/ (maxObjectiveScore - minObjectiveScore)) + 1
+        
+        var teamWon = false;
+        if (game.winningteam == game.teamid)
+        {
+            teamWon = true;
+        }
 
-            // the idea was to pull what type of game it was played. Regular Season, Playoff, International. And give a bonus based on how they performed. But dont think time is going to let me try and figure it out
-            const domesticLeagueBonus = (game.name == "Playoffs") ? gameStats.gameStats.playoff_multiplier : 1;
+        // the idea was to pull what type of game it was played. Regular Season, Playoff, International. And give a bonus based on how they performed. But dont think time is going to let me try and figure it out
+        const domesticLeagueBonus = (game.name == "Playoffs") ? gameStats.gameStats.playoff_multiplier : 1;
+        
+        // todo: Decide!!!
+        const winLossBonus = teamWon ? gameStats.gameStats.win_multiplier : gameStats.gameStats.loss_multiplier;
+        //const winLoss = (game.winningteam == game.teamid) ? gameStats.gameStats.win_bonus : gameStats.gameStats.loss_bonus;
+        //const winLossBonus = winLoss;
+        const teamScore = gameStat * normalizedObjStat * domesticLeagueBonus * winLossBonus
+        
+        //Blue team data
+        if (game.teamid == 100){
+            addScoreToTeam(game.blueteam, teamScore, teamWon);
+        }
             
-            // todo: Decide!!!
-            const winLossBonus = teamWon ? gameStats.gameStats.win_multiplier : gameStats.gameStats.loss_multiplier;
-            //const winLoss = (game.winningteam == game.teamid) ? gameStats.gameStats.win_bonus : gameStats.gameStats.loss_bonus;
-            //const winLossBonus = winLoss;
-            const teamScore = gameStat * normalizedObjStat * domesticLeagueBonus * winLossBonus
-            //console.log(game);
-            //Blue team data
-            if (game.teamid == 100){
-                addScoreToTeam(game.blueteam, teamScore, teamWon);
-            }
-             
-            //red team data
-            if (game.teamid == 200){
-                addScoreToTeam(game.redteamname, teamScore, teamWon);
-            }
-        //}
+        //red team data
+        if (game.teamid == 200){
+            addScoreToTeam(game.redteamname, teamScore, teamWon);
+        }
     }
 
     /* sort and order the teams by score */

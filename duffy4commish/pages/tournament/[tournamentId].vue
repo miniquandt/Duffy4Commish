@@ -42,7 +42,6 @@
                     <th>Vision Score Diff End</th>
                 </tr>
                 <template v-for="t in tournamentData.tournament" :key="t.gameid">
-                    <pre>{{ t }}</pre>
                     <tr v-if="t.tournament_id == tId">
                         <td>{{ t.slug }}</td>
                         <td>{{ t.name }}</td>
@@ -155,7 +154,7 @@
         }
     }
     var playoffCount = 0;
-    //console.log(tournamentGames.tournamentData.tournament);
+    
     for (const t in tournamentGames.tournamentData.tournament) {
         const game = tournamentGames.tournamentData.tournament[t];
         if (game.tournament_id == tId){
@@ -179,7 +178,7 @@
             //const winLoss = (game.winningteam == game.teamid) ? gameStats.gameStats.win_bonus : gameStats.gameStats.loss_bonus;
             //const winLossBonus = winLoss;
             const teamScore = gameStat * normalizedObjStat * domesticLeagueBonus * winLossBonus
-            //console.log(game);
+            
             //Blue team data
             if (game.teamid == 100){
                 addScoreToTeam(game.blueteam, teamScore, teamWon);
@@ -200,7 +199,6 @@
   })
   .sort((a, b) => b.scorePerGame - a.scorePerGame);
 
-console.log(sortedTeams);
 
 
 </script>
