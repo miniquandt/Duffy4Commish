@@ -65,15 +65,15 @@ services:
       - ./metastore-postgresql/postgresql/data:/var/lib/postgresql/data
     depends_on:
       - datanode
+      
+   app:
+     build:
+       context: .
+       dockerfile: Dockerfile
+     container_name: duffy4commish
+     ports:
+       - 3000:3000
+       - 24678:24678
 
-  # app:
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile
-  #   container_name: duffy4commish
-  #   ports:
-  #     - 3000:3000
-  #     - 24678:24678
-
-  #   volumes:
-  #     - ./duffy4commish:/webapp
+     volumes:
+       - ./duffy4commish:/webapp
