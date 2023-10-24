@@ -159,10 +159,11 @@
         const game = tournamentGames.tournamentData.tournament[t];
         if (game.tournament_id == tId){
             tournamentName = game.slug;
+            //Gold is normalized between 1-2
             var gameStat =  getGoldStats(game.gold_diff_14, game.gold_diff_end);
             var objectiveStat = getObjStats(game.towers_end, game.baron_end, game.dragon_end, game.rift_end, game.vision_score_diff_end);
 
-            // normalize objective stat
+            // normalize objective stat between 1-2
             const normalizedObjStat = ((objectiveStat - minObjectiveScore)/ (maxObjectiveScore - minObjectiveScore)) + 1
             var teamWon = false;
             if (game.winningteam == game.teamid)
