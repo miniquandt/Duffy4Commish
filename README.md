@@ -3,9 +3,9 @@
 The folowing steps will hopefully get the project downloaded and installed testing locally. Feel free to skip steps if you already have them installed.
 
 0. Download and install this git repro
-    A: Probably can download Zip from online
-    B: download git, install that way
-        i:https://desktop.github.com/
+    - Probably can download Zip from online
+    - download git, install that way
+        - https://desktop.github.com/
 
 # Download Public Data
 
