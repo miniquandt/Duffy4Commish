@@ -176,7 +176,7 @@ LATERAL VIEW explode(g.teams) teams_table as tt
 WHERE eventtype = "stats_update" AND tt.teamID = pt.teamID
 ```
 
-### focus on team stats
+### Focus on team stats
 ```sql
 /* query 5 */
 CREATE TABLE games_stats_update AS
@@ -242,7 +242,7 @@ ON gsu.platformgameid = riftelder.platformgameid AND gsu.teamid = riftelder.kill
 WHERE gf.eventtype ='game_end';
 ```
 
-### fixed stats used for building ranking system
+### Fixed stats used for building ranking system
 ```sql
 create table stats AS
 SELECT 
@@ -460,10 +460,10 @@ Due to time restraints, I was unable to automatically pull in data from the data
 In DBeaver, you are able to run SQL queries and export them by: 
 - clicking the [Export data] button at the bottom of the screen
 - Export Target:
-    - select JSON files
+    - Select JSON files
 - Extraction Settings
     - Single query
-    - fetch size 300000
+    - Fetch size 300000
         - Or any number larger than the largest query count
 - Format settings
     - no change
