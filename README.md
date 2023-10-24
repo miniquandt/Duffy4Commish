@@ -1,6 +1,6 @@
 # Hackathon 2023: Duffy4Commish
 
-The folowing steps will hopefully get the project downloaded and installed testing locally. Feel free to skip steps if you already have them installed.
+The following steps will hopefully get the project downloaded and installed testing locally. Feel free to skip steps if you already have them installed.
 
 0. Download and install this git repro
     - Probably can download Zip from online
