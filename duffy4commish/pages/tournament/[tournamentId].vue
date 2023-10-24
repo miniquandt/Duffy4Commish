@@ -172,12 +172,10 @@
 
             // the idea was to pull what type of game it was played. Regular Season, Playoff, International. And give a bonus based on how they performed. But dont think time is going to let me try and figure it out
             const domesticLeagueBonus = (game.name == "Playoffs") ? gameStats.gameStats.playoff_multiplier : 1;
-            
-            // todo: Decide!!!
-            const winLossBonus = teamWon ? gameStats.gameStats.win_multiplier : gameStats.gameStats.loss_multiplier;
-            //const winLoss = (game.winningteam == game.teamid) ? gameStats.gameStats.win_bonus : gameStats.gameStats.loss_bonus;
-            //const winLossBonus = winLoss;
-            const teamScore = gameStat * normalizedObjStat * domesticLeagueBonus * winLossBonus
+
+            const winLoss = (game.winningteam == game.teamid) ? gameStats.gameStats.win_bonus : gameStats.gameStats.loss_bonus;
+            const winLossBonus = winLoss;
+            const teamScore = gameStat * normalizedObjStat * domesticLeagueBonus + winLossBonus
             
             //Blue team data
             if (game.teamid == 100){
