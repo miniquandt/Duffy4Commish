@@ -1,0 +1,15 @@
+*.md
+readme.txt
+.DownloadRiotData
+.DownloadRiotData/*
+DownloadRiotData
+hive
+.hive
+.hive/*
+.hdfs
+hdfs
+hdfs/*
+.metastore-postgressql
+.metastore-postgressql/*
+metastore-postgressql/*
+**/node_modules/
