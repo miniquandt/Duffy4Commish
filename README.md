@@ -4,7 +4,7 @@ The following steps will hopefully get the project downloaded and installed test
 
 0. Download and install this git repro
     - Probably can download Zip from online
-    - download git, install that way
+    - Download git, install that way
         - https://desktop.github.com/
 
 # Download Public Data
@@ -20,39 +20,39 @@ The following steps will hopefully get the project downloaded and installed test
             - [ctrl][f5]
         4. if you get a dropdown "select a dubug configuration"
             - select "Python File"
-2. after a few minutes you should have ~60 gb of files in a esports-data folder
+2. After a few minutes you should have ~60 gb of files in a esports-data folder
     - that folder should be in the project's root directory, not in the DownloadRiotData folder
 
 # Set up Docker
 
 1. Download and install Docker: https://www.docker.com/products/docker-desktop/
-    - You will also need to install docker command line/terminal tools unsure if it will be installed with above
-2. open up command prompt/terminal, Navigate to directory where this folder is in
+    - You will also need to install docker command line/terminal tools. I am unsure if it will be installed with above link.
+2. Open up command prompt/terminal, Navigate to directory where this folder is in
     - Command Prompt(windows)/Terminal (mac/linux) commands
         - dir / ls -> show all files and folders in the current folder that you are in
         - cd .. -> change Directory by moving backwards up the folder structure
         - cd Duffy4Commish -> change directory by moving fowards into the folder names "Duffy4Commish"
-3. run command: docker-compose up
-    - you should see many logs being processed
-    - after running this command, in Docker Desktop you should see duffy4commish as a container
-    - if you wish to run docker in the background add a "-d" on the end to run it detached
+3. Run command: docker-compose up
+    - Rou should see many logs being processed
+    - Sfter running this command, in Docker Desktop you should see duffy4commish as a container
+    - If you wish to run docker in the background add a "-d" on the end to run it detached
         - docker-compose up -d
-    - to shut down the docker container, 
-        - in terminal press [ctrl][c]
-        - in docker container press the stop button for duffy4commish, and it will shut down all the containers
+    - To shut down the docker container, 
+        - In terminal press [ctrl][c]
+        - In docker container press the stop button for duffy4commish, and it will shut down all the containers
 
-# load data 
+# Load data 
 
-1. connect to hive-server
+1. Connect to hive-server
     - docker exec -it hive-server /bin/bash
-    - open Docker, containers
+    - Open Docker, containers
         1. find the hive-server container
         2. click the 3 vertical dots
         3. click [Open in Terminal]
         4. enter command "bash" 
-2. run following command to move json serde with dependancy files to proper install location
+2. Run following command to move json serde with dependancy files to proper install location
     - cp /hive-lib/json-serde-1.3.8-jar-with-dependencies.jar /opt/hive/lib/
-3. run following commands to create sql tables
+3. Run following commands to create sql tables
     - cd /sql
     - hive -f leagues.hql
     - hive -f players.hql
@@ -60,7 +60,7 @@ The following steps will hopefully get the project downloaded and installed test
     - hive -f tournaments.hql
     - hive -f mapping-data.hql
     - hive -f games.hql
-4. load data (warning 1: if file fails to find a folder or directory ping me; 2 the last command may take 20 minutes)
+4. Load data (warning 1: if file fails to find a folder or directory ping me; 2 the last command may take 20 minutes)
     - cd /esportsSql
     - hadoop fs -mkdir /esports-sql
     - hadoop fs -put leagues.json hdfs://namenode:8020/esports-sql/leagues.json
@@ -73,24 +73,23 @@ The following steps will hopefully get the project downloaded and installed test
         - Or ^possibly faster but copies file need 2x space // V slower, but doesn't need extra storage
         - hadoop fs -moveFromLocal /esportsData/* hdfs://namenode:8020/esports-data/
 
-# Connect to Database
+# Connect to Database via hive/terminal
 
-0. attempt at visualizing data mapping https://dbdiagram.io/d/650d1dc4ffbf5169f0481c88
-1. type: hive
-2. commands:
+0. Attempt at visualizing data mapping https://dbdiagram.io/d/650d1dc4ffbf5169f0481c88
+1. Type: hive
+2. Commands:
     - show databases;
     - use [database];
         - use lol;
     - show tables;
     - desc [table];
         - desc games;
-3. get query from "Queries.sql" file
 
 # Build Data: SQL Queries
-In order to access the Hive Database, I found it easiest to use DBeaver. It gives a better graphical user experiance than the command line.
+In order to access the Hive Database, I found it easiest to use DBeaver. It gives a better graphical user experience than the command line.
 https://dbeaver.io/download/
 
-you many need to select the lol database.
+You many need to select the lol database.
 ```sql
 use lol;
 ```
