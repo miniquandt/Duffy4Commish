@@ -87,7 +87,13 @@ The folowing steps will hopefully get the project downloaded and installed testi
 3. get query from "Queries.sql" file
 
 # Build Data: SQL Queries
+In order to access the Hive Database, I found it easiest to use DBeaver. It gives a better graphical user experiance than the command line.
+https://dbeaver.io/download/
+
+you many need to select the lol database.
+```sql
 use lol;
+```
 
 ### Create Game and Team
 ```sql
@@ -443,4 +449,46 @@ INNER JOIN teams tb
 on gtc.blueside = tb.team_id
 INNER JOIN teams tr
 on gtc.redside = tr.team_id
+```
+
+# Compile Data for use in the website.
+Due to time restraints, I was unable to automatically pull in data from the database into the Nuxt 3 front end webiste. Instead they have to be manually updated. The files that need to be updated are 
+- /composables/gameStats.js
+- /composables/teamData.js
+- /composables/tournamentData.js
+- /composables/tournaments.js
+
+In DBeaver, you are able to run SQL queries and export them by: 
+- clicking the [Export data] button at the bottom of the screen
+- Export Target:
+    - select JSON files
+- Extraction Settings
+    - Single query
+    - fetch size 300000
+        - Or any number larger than the largest query count
+- Format settings
+    - no change
+- Output
+    - Select Copy to Clipboard
+- Confirm
+    - no change
+After you have the query copied over, you must manually format the result to match the format. I suggest using the find and replace tool in order to remove the quotes especially for the tournamentData.js file.
+
+### gameStats.js
+```sql
+SELECT * FROM stats s;
+```
+### teamData.js
+```sql
+SELECT DISTINCT blueside AS id, blueteam AS name FROM team_data_final tdf;
+```
+
+### tournamentData.js
+```sql
+SELECT DISTINCT * FROM team_data_final tdf;
+```
+
+### tournaments.js
+```sql
+SELECT DISTINCT tournament_id AS id, slug FROM team_data_final tdf;
 ```
