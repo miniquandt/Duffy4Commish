@@ -2,7 +2,7 @@
 <template>
     <div style="background-color: greenyellow;">
         <div>
-            <h2>Tournament Ranking: Global</h2>
+            <h2>Tournament Ranking: Global 2023 Winter Spring Summer</h2>
             <table>
                 <tr>
                     <th>#</th>
